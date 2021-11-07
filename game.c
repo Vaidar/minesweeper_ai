@@ -120,21 +120,22 @@ game *game_new(int width, int height, int mines) {
     return g;
 }
 
-void reveal_cell(game *g, int x, int y) {
+int reveal_cell(game *g, int x, int y) {
     g->board[y][x].state = CELL_STATE_SHOWN;
     if (g->board[y][x].type == EMPTY && g->board[y][x].nearby_mines == 0) {
         reveal_all_nearby_empty(g, x, y);
     } else if (g->board[y][x].type == MINE) {
-        // Lost the game.
+        return 1;
     }
+    return 0;
 }
 
 void draw_board(game *g) {
+    int placed_flags = 0;
     for (int y = -1; y <= g->height; y++) {
         for (int x = -1; x <= g->width; x++) {
             if (y == -1 || y == g->height || x == -1 || x == g->width) {
-                //draw_border(x, y, g->width, g->height);
-                draw_number_border(x, y, g->width, g->height);
+                draw_border(x, y, g->width, g->height);
                 continue;
             }
 
@@ -153,6 +154,7 @@ void draw_board(game *g) {
                 }
                 break;
             case CELL_STATE_FLAGGED:
+                placed_flags++;
                 printf(CELL_STATE_FLAGGED_CHAR);
                 break;
             default:
@@ -162,6 +164,7 @@ void draw_board(game *g) {
         }
         printf("\n");
     }
+    printf("\nFlags placed: %d\tMines: %d\n", placed_flags, g->mines);
 }
 
 void game_free(game *g) {
