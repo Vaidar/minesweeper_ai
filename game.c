@@ -4,7 +4,7 @@
 
 static cell **board_new(int width, int height, int mines) {
     cell **board = calloc(height, sizeof(cell *));
-    for (int i = 0; i < width; i++) {
+    for (int i = 0; i < height; i++) {
         board[i] = calloc(width, sizeof(cell));
     }
 
@@ -68,6 +68,22 @@ static void reveal_all_nearby_empty(game *g, int x, int y) {
     }
 }
 
+static void draw_number_border(int x, int y, int width, int height) {
+    if (y == -1) {
+        if (x > -1) {
+            printf("%-2d", x);
+        } else {
+            printf("   ");
+        }
+    } else if (x == -1) {
+        if (y > -1) {
+            printf("%-3d", y);
+        } else {
+            printf(" ");
+        }
+    }
+}
+
 static void draw_border(int x, int y, int width, int height) {
     if (y == -1) { // Top
         if (x == -1 || x == width) { // Top corners
@@ -117,7 +133,8 @@ void draw_board(game *g) {
     for (int y = -1; y <= g->height; y++) {
         for (int x = -1; x <= g->width; x++) {
             if (y == -1 || y == g->height || x == -1 || x == g->width) {
-                draw_border(x, y, g->width, g->height);
+                //draw_border(x, y, g->width, g->height);
+                draw_number_border(x, y, g->width, g->height);
                 continue;
             }
 
@@ -131,7 +148,7 @@ void draw_board(game *g) {
                     printf(CELL_STATE_MINE_CHAR);
                     break;
                 case EMPTY:
-                    printf("%d", g->board[y][x].nearby_mines);
+                    printf("%d ", g->board[y][x].nearby_mines);
                     break;
                 }
                 break;

@@ -10,9 +10,9 @@
 #define CELL_STATE_SHOWN 1
 #define CELL_STATE_FLAGGED 2
 
-#define CELL_STATE_HIDDEN_CHAR "█"
-#define CELL_STATE_MINE_CHAR "*"
-#define CELL_STATE_FLAGGED_CHAR "F"
+#define CELL_STATE_HIDDEN_CHAR "██"
+#define CELL_STATE_MINE_CHAR "* "
+#define CELL_STATE_FLAGGED_CHAR "F "
 
 #define BORDER_TOP "═"
 #define BORDER_BOTTOM "═"
