@@ -3,6 +3,7 @@
 
 #include "game.h"
 
+// Borde ha en lista över gömda rutor så att den slipper loopa genom allt hela tiden.
 typedef struct {
     int has_to_guess;
 } minesweeper_ai;
